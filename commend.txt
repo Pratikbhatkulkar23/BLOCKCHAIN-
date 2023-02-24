@@ -1,0 +1,17 @@
+#deploy contract commend
+npx hardhat run --network goerli script/deploy.js
+
+#smart contract communucate with ABI 
+#without ABI NOT commnucate with smart contract 
+it's create after smart contract complail in artifact folder
+
+import abi from "./contract/chai.json"
+
+
+#building project 
+npm run build
+
+#install hardhat 
+npx install hardhat 
+#create project
+npx hardhat 
