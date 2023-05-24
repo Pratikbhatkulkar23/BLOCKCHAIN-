@@ -1,5 +1,7 @@
 #deploy contract commend
 npx hardhat run --network goerli script/deploy.js
+#verify contract using hardhat
+npx hardhat verify 0x5A41D5BeBbA445DA75032aa4617c1128c86bA6f7  --network mumbai
 
 #smart contract communucate with ABI 
 #without ABI NOT commnucate with smart contract 
