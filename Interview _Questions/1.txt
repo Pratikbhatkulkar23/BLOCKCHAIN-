@@ -1,0 +1,108 @@
+1)Write a smart contract in Solidity that implements a basic token.
+-- // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract BasicToken {
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint256 public totalSupply;
+
+    mapping(address => uint256) public balanceOf;
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals,
+        uint256 _totalSupply
+    ) {
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
+        totalSupply = _totalSupply;
+        balanceOf[msg.sender] = _totalSupply;
+    }
+
+    function transfer(address to, uint256 value) public returns (bool) {
+        require(balanceOf[msg.sender] >= value, "Insufficient balance");
+
+        balanceOf[msg.sender] -= value;
+        balanceOf[to] += value;
+
+        emit Transfer(msg.sender, to, value);
+        return true;
+    }
+}
+In this example:
+
+The contract BasicToken represents a basic token implementation.
+The name, symbol, decimals, and totalSupply variables store the token's name, symbol, decimal places, and total supply respectively.
+The balanceOf mapping tracks the balance of each token holder.
+The Transfer event is emitted when tokens are transferred.
+The constructor initializes the token's initial state, including the balance of the contract creator.
+The transfer function allows token holders to transfer tokens to other addresses. It verifies the sender's balance and adjusts the balances accordingly.
+Remember to compile and deploy the contract using an Ethereum development environment like Remix or Truffle. Also, note that this implementation is simplified and lacks features like allowances and more advanced functionality typically found in real-world token contracts.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+2)Write a function that takes in a block header and verifies its validity.
+-> pragma solidity ^0.8.0;
+
+contract BlockVerifier {
+    struct BlockHeader {
+        bytes32 previousBlockHash;
+        bytes32 merkleRoot;
+        uint256 timestamp;
+        uint256 difficulty;
+        uint256 nonce;
+    }
+
+    function verifyBlockHeader(BlockHeader memory header) public pure returns (bool) {
+        // Perform various validity checks on the block header
+
+        // Check if the proof-of-work is valid
+        bytes32 blockHash = keccak256(abi.encodePacked(header.previousBlockHash, header.merkleRoot, header.timestamp, header.difficulty, header.nonce));
+        uint256 target = 2**(256 - header.difficulty);
+        if (uint256(blockHash) >= target) {
+            return false;
+        }
+
+        // Check if the timestamp is not too far in the future (within a reasonable range)
+        if (header.timestamp > block.timestamp + 2 minutes) {
+            return false;
+        }
+
+        // Additional checks like verifying the previous block hash, validating the Merkle root, etc.
+
+        return true;
+    }
+}
+
+To verify the validity of a block header, you need to perform several checks, including validating the proof-of-work,
+checking the block's timestamp, ensuring the block's previous block hash matches the previous block's hash, and more. 
+Here's an example of a function in Solidity that takes a block header as input and verifies its validity:
+In this example:
+
+The BlockHeader struct represents the fields of a block header, including previousBlockHash, merkleRoot, timestamp, difficulty, and nonce.
+The verifyBlockHeader function takes a BlockHeader as input and returns a boolean indicating whether the block header is valid or not.
+Inside the function, various checks are performed. The example includes two checks:
+The proof-of-work is validated by calculating the block hash using the keccak256 function and checking if it meets the difficulty target.
+The timestamp is checked to ensure it is not too far in the future, with a maximum allowable difference of 2 minutes.
+You can add additional checks based on the specific requirements of your blockchain implementation, such as validating the previous block hash, Merkle root, or other consensus-specific rules.
+
+Remember that this example is simplified and may not cover all the necessary checks for a fully secure blockchain implementation. 
+It's crucial to consider other factors like consensus algorithms, block validation rules, and potential attacks when implementing a real-world blockchain system
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)Implement a Merkle tree data structure and use it to validate a set of transactions.
+-->
+
+
+
+
+
